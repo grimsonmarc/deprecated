@@ -105,12 +105,6 @@ class Crypt_RSA_MathLoader
 
         $class_name = 'Crypt_RSA_Math_' . $wrapper_name;
         $class_filename = dirname(__FILE__) . '/Math/' . $wrapper_name . '.php';
-
-        if (!is_file($class_filename)) {
-            $err_handler->pushError("can't find file [{$class_filename}] for RSA math wrapper [{$wrapper_name}]", CRYPT_RSA_ERROR_NO_FILE);
-            return $err_handler->getLastError();
-        }
-        require_once($class_filename);
 		
 		$class_name = "\\Deprecated\\Crypt\\RSA\\" . $class_name;
 		
