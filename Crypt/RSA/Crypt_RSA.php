@@ -170,14 +170,14 @@ class Crypt_RSA extends Crypt_RSA_ErrorHandler
         // set error handler
         $this->setErrorHandler($error_handler);
         // try to load math wrapper
-        $obj = &Crypt_RSA_MathLoader::loadWrapper($wrapper_name);
+        $obj = Crypt_RSA_MathLoader::loadWrapper($wrapper_name);
         if ($this->isError($obj)) {
             // error during loading of math wrapper
             // Crypt_RSA object is partially constructed.
             $this->pushError($obj);
             return;
         }
-        $this->_math_obj = &$obj;
+        $this->_math_obj = $obj;
 
         if (!is_null($params)) {
             if (!$this->setParams($params)) {
@@ -205,9 +205,9 @@ class Crypt_RSA extends Crypt_RSA_ErrorHandler
      * @return object  new Crypt_RSA object on success or PEAR_Error object on failure
      * @access public
      */
-    function &factory($params = null, $wrapper_name = 'default', $error_handler = '')
+    function factory($params = null, $wrapper_name = 'default', $error_handler = '')
     {
-        $obj = &new Crypt_RSA($params, $wrapper_name, $error_handler);
+        $obj = new Crypt_RSA($params, $wrapper_name, $error_handler);
         if ($obj->isError()) {
             // error during creating a new object. Retrurn PEAR_Error object
             return $obj->getLastError();
