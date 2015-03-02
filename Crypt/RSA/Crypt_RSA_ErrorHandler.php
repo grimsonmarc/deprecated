@@ -148,7 +148,9 @@ class Crypt_RSA_ErrorHandler
      */
     function isError($err = null)
     {
-        return is_null($err) ? (sizeof($this->_errors) > 0) : \PEAR::isError($err);
+//      return is_null($err) ? (sizeof($this->_errors) > 0) : \PEAR::isError($err); // <-- causes "Non-static method PEAR::isError() should not be called statically" in PHP 5.6
+        $myPear = new \PEAR;
+        return is_null($err) ? (sizeof($this->_errors) > 0) : $myPear->isError($err);
     }
 
     /**
