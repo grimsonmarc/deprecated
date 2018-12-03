@@ -50,10 +50,10 @@ namespace Deprecated\Crypt\RSA;
  *
  *    // get public key
  *    $public_key = $key_pair->getPublicKey();
- * 
+ *
  *    // get private key
  *    $private_key = $key_pair->getPrivateKey();
- * 
+ *
  *    // generate new 512-bit key pair
  *    $key_pair->generate(512);
  *
@@ -632,9 +632,9 @@ class Crypt_RSA_KeyPair extends Crypt_RSA_ErrorHandler
     {
         static $default_random_generator = null;
 
-        if (is_string($random_generator)) {
+        if (!is_null($random_generator)) {
             // set user's random generator
-            if (!function_exists($random_generator)) {
+            if (!is_callable($random_generator)) {
                 $this->pushError("can't find random generator function with name [{$random_generator}]");
                 return false;
             }
@@ -643,8 +643,10 @@ class Crypt_RSA_KeyPair extends Crypt_RSA_ErrorHandler
         else {
             // set default random generator
             $this->_random_generator = is_null($default_random_generator) ?
-                ($default_random_generator = create_function('', '$a=explode(" ",microtime());return(int)($a[0]*1000000);')) :
-                $default_random_generator;
+                ($default_random_generator = function() {
+                    $a = explode(" ", microtime());
+                    return (int)($a[0] * 1000000);
+                }) : $default_random_generator;
         }
         return true;
     }
@@ -733,7 +735,7 @@ class Crypt_RSA_KeyPair extends Crypt_RSA_ErrorHandler
     }
 
     /**
-     * converts keypair to PEM-encoded string, which can be stroed in 
+     * converts keypair to PEM-encoded string, which can be stroed in
      * .pem compatible files, contianing RSA private key.
      *
      * @return string PEM-encoded keypair on success, false on error

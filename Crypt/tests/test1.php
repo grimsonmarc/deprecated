@@ -188,9 +188,11 @@ if (!$rsa_obj->validateSign($text, $sign)) {
 }
 
 // check signing/sign validating with specific hash function
-$params = array(
-    'hash_func' => create_function('$text', 'return 0x1234;'), // silly hash function :)
-);
+$params = [
+    'hash_func' => function ($text) {
+        return 0x1234; // silly hash function :)
+    },
+];
 $rsa_obj->setParams($params);
 $text = '1234567890';
 $sign = $rsa_obj->createSign($text);
