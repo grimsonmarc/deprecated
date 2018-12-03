@@ -36,7 +36,7 @@ namespace Deprecated\Crypt\RSA;
  *
  * Example usage:
  *     // creating an error handler
- *     $error_handler = create_function('$obj', 'echo "error: ", $obj->getMessage(), "\n"');
+ *     $error_handler = function ($e){echo "error: ", $e->getMessage(), "\n";};
  *
  *     // 1024-bit key pair generation
  *     $key_pair = new Crypt_RSA_KeyPair(1024);
