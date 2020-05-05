@@ -89,7 +89,7 @@ class Crypt_RSA_Math_GMP
         do {
             // dirty hack: GMP returns FALSE, when second argument equals to int(0).
             // so, it must be converted to string '0'
-            $result = gmp_add(gmp_mul($result, 256), strval(ord($str{--$n})));
+            $result = gmp_add(gmp_mul($result, 256), strval(ord($str[--$n])));
         } while ($n > 0);
         return $result;
     }
@@ -281,7 +281,7 @@ class Crypt_RSA_Math_GMP
     {
         $tmp = $this->int2bin($num);
         $bit_len = strlen($tmp) * 8;
-        $tmp = ord($tmp{strlen($tmp) - 1});
+        $tmp = ord($tmp[strlen($tmp) - 1]);
         if (!$tmp) {
             $bit_len -= 8;
         }
@@ -344,7 +344,7 @@ class Crypt_RSA_Math_GMP
         $num = gmp_div($num, 1 << $start_bit);
         $tmp = substr($this->int2bin($num), $start_byte, $byte_length);
         $tmp = str_pad($tmp, $byte_length, "\0");
-        $tmp = substr_replace($tmp, $tmp{$byte_length - 1} & chr(0xff >> (8 - $bit_length)), $byte_length - 1, 1);
+        $tmp = substr_replace($tmp, $tmp[$byte_length - 1] & chr(0xff >> (8 - $bit_length)), $byte_length - 1, 1);
         return $this->bin2int($tmp);
     }
 
