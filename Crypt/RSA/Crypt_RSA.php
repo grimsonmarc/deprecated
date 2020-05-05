@@ -413,7 +413,7 @@ class Crypt_RSA extends Crypt_RSA_ErrorHandler
         $result = $this->_math_obj->int2bin($plain_data);
 
         // delete tail, containing of \x01
-        $tail = ord($result{strlen($result) - 1});
+        $tail = ord($result[strlen($result) - 1]);
         if ($tail != 1) {
             $this->pushError("Error tail of decrypted text = {$tail}. Expected 1", CRYPT_RSA_ERROR_WRONG_TAIL);
             return false;
